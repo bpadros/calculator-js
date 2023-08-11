@@ -44,16 +44,20 @@ const calculate = (num1, operator, num2) => {
  * @param {string} input - The input received from the clicked button.
  */
 const handleButtonClick = (input) => {
-   const currentText = display.textContent;
-
-   if (
-      currentText === "Error." ||
-      currentText === "0"
+   if (display.textContent === "Invalid input format.") {
+      display.textContent = input;
+      input = input === "0" ? "" : input;
+   } else if (
+      display.textContent === "0" ||
+      display.textContent === "Division by zero!"
    ) {
-      display.textContent = input === "C" ? "0" : input;
-      input = input === "0" || input === "C" ? "" : input;
+      display.textContent = input;
+      input = input === "0" ? "" : input;
+   } else if (input === "C") {
+      display.textContent = "0";
+      input = "";
    } else if (input === "=") {
-      const result = calculateFromString(currentText);
+      const result = calculateFromString(display.textContent);
       display.textContent = result;
       input = result.toString();
    } else {

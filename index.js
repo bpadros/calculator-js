@@ -28,7 +28,7 @@ const calculate = (num1, operator, num2) => {
          return num1 - num2;
       case "/":
          if (num2 === 0) {
-            return "Division by zero!";
+            return "Error.";
          }
          return num1 / num2;
       case "*":
@@ -44,20 +44,16 @@ const calculate = (num1, operator, num2) => {
  * @param {string} input - The input received from the clicked button.
  */
 const handleButtonClick = (input) => {
-   if (display.textContent === "Invalid input format.") {
-      display.textContent = input;
-      input = input === "0" ? "" : input;
-   } else if (
-      display.textContent === "0" ||
-      display.textContent === "Division by zero!"
+   const currentText = display.textContent;
+
+   if (
+      currentText === "Error." ||
+      currentText === "0"
    ) {
-      display.textContent = input;
-      input = input === "0" ? "" : input;
-   } else if (input === "C") {
-      display.textContent = "0";
-      input = "";
+      display.textContent = input === "C" ? "0" : input;
+      input = input === "0" || input === "C" ? "" : input;
    } else if (input === "=") {
-      const result = calculateFromString(display.textContent);
+      const result = calculateFromString(currentText);
       display.textContent = result;
       input = result.toString();
    } else {
@@ -81,7 +77,7 @@ const calculateFromString = (input) => {
       const num2 = parseFloat(match[3]);
       return calculate(num1, operator, num2);
    } else {
-      return "Invalid input format.";
+      return "Error.";
    }
 };
 
